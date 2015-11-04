@@ -1,0 +1,156 @@
+body {
+	background-image: url("space.png");
+	background-repeat: repeat;
+}
+.back {
+	position: fixed;
+	width:auto;
+	height:10px;
+	visibility: hidden;
+}
+.bigtitle {
+	font-size: 120px;
+	font-weight: bold;
+}
+.dank {
+	visibility:hidden;
+	opacity: 0;
+}
+.sick {
+	visibility:visible;
+	opacity: 1;
+	transition: opacity 2s linear 0s;
+}
+#bar {
+	border: 5px;
+	border-style:solid;
+	border-color:black;
+}
+.text {
+	color: #CDCDCD;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	text-align: center;
+	font-family: Helvetica Neue, Helvetica, Arial, Sans-serif;
+}
+div.hidden {
+	height:0;
+	width: 0;
+	overflow: hidden;
+}
+.counters {
+	left:0px;
+	top:0px;
+	bottom:0px;
+	overflow-x:scroll;
+	overflow-y:hidden;
+	position:absolute;
+	width: 280px;
+	background-color: #555555;
+	padding: 30px;
+	vertical-align:top;
+	border: 5px;
+	border-style: solid;
+	border-color: black;
+	text-align: left;
+}
+.rightside {
+	border: 5px;
+	border-style: solid;
+	border-color: black;
+	left:350px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	position:absolute;
+	display:inline-block;
+	overflow:scroll;
+}
+.sheep {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.buttons {
+	text-align: left;
+}
+div.resources {
+	vertical-align: top;
+	display: inline-block;
+	background-color: #555555;
+	padding: 20px;
+	border: 5px;
+	border-style: solid;
+	border-color: black;
+	width: 1100px;
+	text-align: center;
+}
+div.center {
+	text-align: center;
+}
+div.inline
+{
+    display: inline-block;
+}
+* {
+margin: 0;
+}
+html {
+	height: 100%;
+}
+#flavorText {
+	position: absolute;
+	font-size: 12px;
+	bottom: 1em;
+	right: 1em;
+}
+.body {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 30px;
+}
+.delete {
+	font-size:36px;
+	color:blue;
+}
+.footer {
+	position:fixed;
+	bottom: 0;
+	height:auto;
+	right:0;
+	background-color: gray;
+	padding: 20px;
+	border: 5px;
+	border-style: solid;
+	border-color: black;
+	max-width: 200px;
+	font-size: 24px;
+}
+.push {
+	height: 1em;
+}
+.unit {
+	vertical-align: top;
+}
+div.upgrades {
+	display: inline-block;
+	background-color: gray;
+	padding: 20px;
+	border: 5px;
+	border-style: solid;
+	border-color: black;
+}
+div.bigcontainer {
+	text-align: center;
+	min-width: 1300px;
+	width: auto !important;
+	width: 1300px;
+	display: block;
+	overflow: hidden;
+}
+.inlined {
+	display: inline;
+}
+.counter {
+	font-size: 32px;
+	white-space: nowrap;
+}
