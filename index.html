@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>[insert title here]</title>
+    <link href="test.css" rel="stylesheet">
+  </head>
+  <body onLoad="init()">
+  <script src="sheep.js"></script>
+	<script src="tooltip.js"></script>
+  <div class="counters">
+		<h2 class="text" style="text-align:left; font-size:48px">Numbers</h2>
+			<span id="1Counter" class="text counter">0 1's</span><br />
+			<span id="2Counter" class="text counter">0 2's</span><br />
+			<span id="3Counter" class="text counter">0 3's</span><br />
+			<span id="4Counter" class="text counter">0 4's</span><br />
+			<span id="5Counter" class="text counter">0 5's</span><br />
+			<span id="6Counter" class="text counter">0 6's</span><br />
+			<span id="7Counter" class="text counter">0 7's</span><br />
+			<span id="8Counter" class="text counter">0 8's</span><br />
+			<span id="9Counter" class="text counter">0 9's</span><br />
+	</div>
+	<div class="rightside">
+  <div id="fly"></div>
+  <div class="body">
+	<div class="bigcontainer">
+	<div class="bigtitle center text">[insert title here]</div>
+	<br />
+		<div class="resources">
+		<h2 class="center text">Clickers</h2>
+			<div class="buttons">
+				<div class="inline center sheep">
+					<img src="1.png" id="1Button" onmouseout="cancelAuto()" onmouseover="autoClick(1)" onClick="buttonPress(1)" align=middle class="text" />
+					<br />
+					<div class="center inline">
+						<span id="1Cost" class="text">Cost: </span>
+						<span class="text" id="cost1"/>
+					</div>
+				</div>
+				<div class="inline center sheep">
+					<img src="2.png" id="2Button" onmouseout="cancelAuto()" onmouseover="autoClick(2)" onClick="buttonPress(2)" align=middle class="text" />
+					<br />
+					<div class="center inline">
+						<span id="2Cost" class="text">Cost: </span>
+						<span class="text" id="cost2"/>
+					</div>
+				</div>
+				<div id="3Option" class="hidden inline center sheep">
+					<img src="3.png" id="3Button" onmouseout="cancelAuto()" onmouseover="autoClick(3)" onClick="buttonPress(3)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="3Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost3"/>
+					</div>
+				</div>
+				<div id="4Option" class="hidden inline center sheep">
+					<img src="4.png" id="4Button" onmouseout="cancelAuto()" onmouseover="autoClick(4)" onClick="buttonPress(4)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="4Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost4"/>
+					</div>
+				</div>
+				<div id="5Option" class="hidden inline center sheep">
+					<img src="5.png" id="5Button" onmouseout="cancelAuto()" onmouseover="autoClick(5)" onClick="buttonPress(5)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="5Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost5"/>
+					</div>
+				</div>
+				<div id="6Option" class="hidden inline center sheep">
+					<img src="6.png" id="6Button" onmouseout="cancelAuto()" onmouseover="autoClick(6)" onClick="buttonPress(6)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="6Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost6"/>
+					</div>
+				</div>
+				<div id="7Option" class="hidden inline center sheep">
+					<img src="7.png" id="7Button" onmouseout="cancelAuto()" onmouseover="autoClick(7)" onClick="buttonPress(7)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="7Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost7"/>
+					</div>
+				</div>
+				<div id="8Option" class="hidden inline center sheep">
+					<img src="8.png" id="8Button" onmouseout="cancelAuto()" onmouseover="autoClick(8)" onClick="buttonPress(8)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="8Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost8"/>
+					</div>
+				</div>
+				<div id="9Option" class="hidden inline center sheep">
+					<img src="9.png" id="9Button" onmouseout="cancelAuto()" onmouseover="autoClick(9)" onClick="buttonPress(9)" align=middle class="dank text" />
+					<br />
+					<div class="center inline">
+						<span id="9Cost" class="dank text">Cost: </span>
+						<span class="dank text" id="cost9"/>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="center">
+			<div class="text" onClick="toggle()" style="display:inline-block" id="toggle">Toggle Multiclick (off)</div><br />
+			<div class="text" onClick="clickToggle()" style="display:inline-block" id="clickToggle">Toggle Autoclick (off)</div>
+			</div>
+		</div>
+		<br />
+		<div class="resources">
+			<h2 class="center text">Generators</h2>
+			<div class="center" id="generators">
+				</div>
+				<br />
+				<div class="inline center text" onClick="clickUpgradeToggle()" id="clickUpgradeToggle">Toggle Autoclick (off)</div>
+		</div>
+		<br />
+		<div class="dank hidden" id="buttonMain">
+			<h2 class = "center text">!!!Button!!!</h2>
+			<div id="button" class="center text">
+				<img id="theButton" onClick="bigButtonPress()" src="button.png" />
+				<br />
+				<div style="display:inline-block; position:relative; top:0px; left:0px; width:613px; height:auto">
+					<img style="position:relative; width:603px;" id="bar" src="bar.png" />
+					<img style="position:absolute; top:5px; left:5px;" id="pointer" src="pointer.png" />
+				</div>
+				<br />
+				<span type="center text" id="buttonMultiplier">Generator Multiplier: x1</span>
+			</div>
+		</div>
+		<div class="resources">
+			<h2 class="center text">Upgrades</h2>
+			<div id="unlocks">
+			</div>
+		</div>
+		<br />
+		<div class="dank hidden" id="researchMain">
+			<h2 class="center text">'Research'</h2>
+			<div id="research"></div>
+		</div>
+	<div class="bigcontainer">
+	<div class="resources">
+	<button class="center text delete" onClick="deleteSave()">Delete Save</button>
+	</div>
+	</div>
+	<div id="winrar" class="text bigtitle">GET TO 100 <span style="color:#FF5500">6</span>'s</div>
+	<div class="push"></div>
+	</div>
+	<div class="text" id="tooltip">
+	<div class="text" id="tooltipMessage"></div>
+	<i class="text" id="flavorText"></i>
+	</div>
+	</div>
+	</div>
+	<script type="text/javascript">
+	function deleteSave() {
+		var r = confirm("Are you really, really sure?");
+		if (r == true) {
+			localStorage.removeItem("save");
+			location.reload();
+		}
+	}
+	</script>
+  </body>
+</html>
