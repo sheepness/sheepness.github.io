@@ -28,7 +28,7 @@ var upgradeTimer = false;
 var saveTimer = false;
 var clickTimer = false;
 var ok = false;
-var mainInterval = 10;
+var mainInterval = 50;
 
 var multiClick = true;
 var clickTime = 1000;
