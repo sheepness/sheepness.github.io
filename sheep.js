@@ -56,6 +56,10 @@ var twosTooActivated = false;
 var twosTooTemporary = 0;
 var twosTooOriginal = 0;
 
+var startTime = 0;
+var elapsedTime = 0;
+var totalElapsedTime = 0;
+
 function bigButtonPress() {
 	offset+=25;
 	if (offset>603)
@@ -334,6 +338,8 @@ function initGenerators() {
 	document.getElementById("generators").innerHTML = string;
 }
 function init() {
+	var d = new Date();
+	startTime = d.getTime();
 	initGenerators();
 	initUnlocked();
 	initResearch();
@@ -405,6 +411,9 @@ function timer() {
 	checkThirteen();
 	checkFourModTen();
 	checkTwosToo();
+	var d = new Date();
+	elapsedTime = d.getTime()-startTime;
+	totalElapsedTime += elapsedTime;
 	generatorsTick();
 	researchTick();
 	buttonTick();
@@ -416,6 +425,8 @@ function timer() {
 		}
 	}
 	render();
+	d = new Date();
+	startTime = d.getTime();
 }
 function backgroundTick() {
 	for (i=0; i<number.length; i++) {
@@ -435,17 +446,21 @@ function backgroundTick() {
 		}
 	}
 }
+function skippedTicks() {
+	return ((Math.floor(totalElapsedTime/mainInterval))-Math.floor((totalElapsedTime-elapsedTime)/mainInterval));
+}
 function generatorsTick() {
+	var lagMultiplier = skippedTicks();
 	for (i=0; i<generatorEffects.length; i++) {
 		if (generatorEffects[i]>0) {
 			if (i<generatorEffects.length-1) {
 				var multiplier = 1;
 				for (j=generatorEffects.length-1; j>i; j--)
 					multiplier*=(1+generatorEffects[j]);
-				number[i]+=(generatorEffects[i]*generatorMultiplier[i]*multiplier*generatorBoost*mainInterval/1000);
+				number[i]+=(generatorEffects[i]*generatorMultiplier[i]*multiplier*generatorBoost*lagMultiplier*mainInterval/1000);
 			}
 			else
-				number[i]+=(generatorEffects[i]*generatorMultiplier[i]*mainInterval/1000);
+				number[i]+=(generatorEffects[i]*generatorMultiplier[i]*lagMultiplier*mainInterval/1000);
 		}
 	}
 }
