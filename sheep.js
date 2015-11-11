@@ -332,7 +332,7 @@ function initBackground() {
 	var string = "";
 	for (i=0; i<number.length; i++) {
 		for (j=0; j<20; j++)
-				string += "<img id=\"Background"+(i+1)+"-"+(j+1)+"\" class=\"back\" src=\""+(i+1)+".png\" />";
+				string += "<img id=\"Background"+(i+1)+"-"+(j+1)+"\" class=\"back\" src=\"numbers/"+(i+1)+".png\" />";
 	}
 	document.getElementById("fly").innerHTML = string;
 }
@@ -343,9 +343,25 @@ function initGenerators() {
 	}
 	document.getElementById("generators").innerHTML = string;
 }
+function initNumbers() {
+	var string = '<h2 class="text" style="text-align:left; font-size:48px">Numbers</h2>';
+	for (i=1; i<number.length+1; i++) {
+		string += '<span id="'+i+'Counter" class="text counter">0 '+i+'\'s</span><br />';
+	}
+	document.getElementById("counters").innerHTML = string;
+}
+function initClickers() {
+	var string = "";
+	for (i=1; i<number.length+1; i++) {
+		string += '<div class="inline center sheep"><img src="numbers/'+i+'.png" id="'+i+'Button" onmouseout="cancelAuto()" onmouseover="autoClick('+i+')" onClick="buttonPress('+i+')" align=middle class="text" /><br /><div class="center inline"><span id="'+i+'Cost" class="text">Cost: </span><span class="text" id="cost'+i+'"/></div></div>';
+	}
+	document.getElementById("buttons").innerHTML = string;
+}
 function init() {
 	var d = new Date();
 	startTime = d.getTime();
+	initNumbers();
+	initClickers();
 	initGenerators();
 	initUnlocked();
 	initResearch();
