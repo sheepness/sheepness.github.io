@@ -1,4 +1,6 @@
 var number = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+var baseCosts = [0, 10, 100, 1000, 420420, 666, 7777777, 88888888, 999999999];
+var discounts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 var costs = [0, 10, 100, 1000, 420420, 666, 7777777, 88888888, 999999999];
 var largestNumberAchieved = 1;
 
@@ -8,14 +10,14 @@ var generatorEffects = [0, 0, 0, 0, 0, 0, 0, 0];
 var generatorMultiplier = [1, 1, 1, 1, 1, 1, 1, 1];
 var generatorBoost = 1;
 
-var upgradeCosts = [[[1111, 1]], [[2222, 2]], [[3333, 3]], [[4444, 4]], [[11111, 1]], [[22222, 2]], [[33333, 3]], [[44444, 4]], [[1111, 1]], [[2222, 2]], [[3333, 3]], [[4444, 4]],[[11111, 1], [2222, 2], [333, 3]], [[2, 5]], [[100000000, 2]], [[10000000, 1]], [[666, 6]], [[500000000000, 1]], [[5555, 5]],[[10000000000, 2]],[[1000, 4]], [[44444, 4]],[[500000000000, 1],[3333333, 3]]];//[[66666, 6]],[[66666, 6]],[[66666, 6]],[[66666, 6]],[[66666, 6]]
+var upgradeCosts = [[[1111, 1]], [[2222, 2]], [[3333, 3]], [[4444, 4]], [[11111, 1]], [[22222, 2]], [[33333, 3]], [[44444, 4]], [[1111, 1]], [[2222, 2]], [[3333, 3]], [[4444, 4]],[[11111, 1], [2222, 2], [333, 3]], [[2, 5]], [[100000000, 2]], [[10000000, 1]], [[666, 6]], [[500000000000, 1]], [[5555, 5]],[[10000000000, 2]],[[1000, 4]], [[44444, 4]],[[500000000000, 1],[3333333, 3]],[[6666, 6]],[[6666, 6]],[[6666, 6]],[[6666, 6]],[[6666, 6]]];
 var displayPermutation = new Array(upgradeCosts.length);
 var upgradeEffects = new Array(upgradeCosts.length);
 
 var researchInit = true;
 var researchUnlocked = false;
-var researchCosts = [[[666, 6]]];
-var researchTimers = [10000];
+var researchCosts = [[[666, 6]],[[66666, 6]],[[66666, 6]],[[6666, 6]],[[6666, 6]],[[6666, 6]]];
+var researchTimers = [10000, 100000, 200000, 500000, 500000, 1000000];
 var researchPermutation = new Array(researchCosts.length);
 var researchEffects = new Array(researchCosts.length);
 var researchCounting = new Array(researchCosts.length);
@@ -55,6 +57,10 @@ var twosToo = false;
 var twosTooActivated = false;
 var twosTooTemporary = 0;
 var twosTooOriginal = 0;
+
+var sevensCounter = 0;
+var sevensGenerator = 0;
+var discounterInterval = 100;
 
 var startTime = 0;
 var elapsedTime = 0;
@@ -264,7 +270,7 @@ function initUnlocked() {
 	var string = "";
 	for (i=1; i<upgradeCosts.length+1; i++) {
 		upgradeEffects[i-1] = false;
-		string += "<div id=\"Unlocked"+(displayPermutation[i-1]+1)+"\" class=\"hidden center inline unit\"><img src=\"upgrade"+(displayPermutation[i-1]+1)+".png\" id=\"UnlockButton"+(displayPermutation[i-1]+1)+"\" onMouseOver=\"setUpgradeTooltip("+(displayPermutation[i-1]+1)+")\" onMouseOut=\"cancelTooltip()\" onClick=\"acquire("+(displayPermutation[i-1]+1)+")\" align=middle class=\"dank text\" /><br /><div class=\"center inline\"><div id=\"UnlockCost"+(displayPermutation[i-1]+1)+"\" class=\"dank text\">Cost: </div><div class=\"dank text\" id=\"UnlockPrice"+(displayPermutation[i-1]+1)+"\"></div></div><div class=\"dank text\" id=\"Unlock"+(displayPermutation[i-1]+1)+"\"><span style=\"color:red\">Not Acquired</span></div></div>";
+		string += "<div id=\"Unlocked"+(displayPermutation[i-1]+1)+"\" class=\"hidden center inline unit\"><img src=\"upgrades/upgrade"+(displayPermutation[i-1]+1)+".png\" id=\"UnlockButton"+(displayPermutation[i-1]+1)+"\" onMouseOver=\"setUpgradeTooltip("+(displayPermutation[i-1]+1)+")\" onMouseOut=\"cancelTooltip()\" onClick=\"acquire("+(displayPermutation[i-1]+1)+")\" align=middle class=\"dank text\" /><br /><div class=\"center inline\"><div id=\"UnlockCost"+(displayPermutation[i-1]+1)+"\" class=\"dank text\">Cost: </div><div class=\"dank text\" id=\"UnlockPrice"+(displayPermutation[i-1]+1)+"\"></div></div><div class=\"dank text\" id=\"Unlock"+(displayPermutation[i-1]+1)+"\"><span style=\"color:red\">Not Acquired</span></div></div>";
 	}
 	document.getElementById("unlocks").innerHTML = string;
 }
@@ -318,7 +324,7 @@ function initResearch() {
 		researchCounting[i-1] = false;
 		researchCurrentTime[i-1] = 100000000000000000000;
 		researchActivated[i-1] = false;
-		string += "<div id=\"Researched"+(researchPermutation[i-1]+1)+"\" class=\"hidden center inline unit\"><img src=\"hydrogen.png\" id=\"ResearchButton"+(researchPermutation[i-1]+1)+"\" onMouseOver=\"setResearchTooltip("+(researchPermutation[i-1]+1)+")\" onMouseOut=\"cancelTooltip()\" onClick=\"acquireR("+(researchPermutation[i-1]+1)+")\" align=middle class=\"dank text\" /><br /><div class=\"center inline\"><div id=\"ResearchCost"+(researchPermutation[i-1]+1)+"\" class=\"dank text\">Cost: </div><div class=\"dank text\" id=\"ResearchPrice"+(researchPermutation[i-1]+1)+"\"></div></div><br /><div class=\"dank text\" id=\"ResearchTimer"+(researchPermutation[i-1]+1)+"\">0s</div><div class=\"dank text\" id=\"Research"+(researchPermutation[i-1]+1)+"\"><span style=\"color:red\">Not Acquired</span></div></div>";
+		string += "<div id=\"Researched"+(researchPermutation[i-1]+1)+"\" class=\"hidden center inline unit\"><img src=\"upgrades/upgrade17.png\" id=\"ResearchButton"+(researchPermutation[i-1]+1)+"\" onMouseOver=\"setResearchTooltip("+(researchPermutation[i-1]+1)+")\" onMouseOut=\"cancelTooltip()\" onClick=\"acquireR("+(researchPermutation[i-1]+1)+")\" align=middle class=\"dank text\" /><br /><div class=\"center inline\"><div id=\"ResearchCost"+(researchPermutation[i-1]+1)+"\" class=\"dank text\">Cost: </div><div class=\"dank text\" id=\"ResearchPrice"+(researchPermutation[i-1]+1)+"\"></div></div><br /><div class=\"dank text\" id=\"ResearchTimer"+(researchPermutation[i-1]+1)+"\">0s</div><div class=\"dank text\" id=\"Research"+(researchPermutation[i-1]+1)+"\"><span style=\"color:red\">Not Acquired</span></div></div>";
 	}
 	document.getElementById("research").innerHTML = string;
 }
@@ -333,7 +339,7 @@ function initBackground() {
 function initGenerators() {
 	var string = "";
 	for (i=1; i<generatorEffects.length+1; i++) {
-		string += "<div class=\"center inline sheep\"><img src=\"gear"+i+".png\" id=\"Upgrade"+i+"\" onMouseOver=\"setTooltip("+i+"), autoUpgradeClick("+i+")\" onMouseOut=\"cancelTooltip(), cancelUpgradeAuto()\" onClick=\"upgrade("+i+")\" align=middle class=\"text\" /><br /><div class=\"center inline\"><span id=\"UpgradeCost"+i+"\" class=\"text\">Cost: </span><span class=\"text\" id=\"UpgradePrice"+i+"\" /></div><br /><div class=\"center text\" id=\"UpAmount"+i+"\">You have: 0</div><div id=\"UpgradeMultiplier"+i+"\" class=\"center text\">Multiplier: x1</div></div>"
+		string += "<div class=\"center inline sheep\"><img src=\"generators/gear"+i+".png\" id=\"Upgrade"+i+"\" onMouseOver=\"setTooltip("+i+"), autoUpgradeClick("+i+")\" onMouseOut=\"cancelTooltip(), cancelUpgradeAuto()\" onClick=\"upgrade("+i+")\" align=middle class=\"text\" /><br /><div class=\"center inline\"><span id=\"UpgradeCost"+i+"\" class=\"text\">Cost: </span><span class=\"text\" id=\"UpgradePrice"+i+"\" /></div><br /><div class=\"center text\" id=\"UpAmount"+i+"\">You have: 0</div><div id=\"UpgradeMultiplier"+i+"\" class=\"center text\">Multiplier: x1</div></div>"
 	}
 	document.getElementById("generators").innerHTML = string;
 }
@@ -417,7 +423,11 @@ function timer() {
 	generatorsTick();
 	researchTick();
 	buttonTick();
-	if (number[5]>=100)
+	discountersTick();
+	for (i=0; i<costs.length; i++) {
+		costs[i] = baseCosts[i]-discounts[i];
+	}
+	if (number[6]>=100)
 		document.getElementById("winrar").innerHTML = "U R WINRAR";
 	for (i=1; i<number.length+1; i++) {
 		if (number[i-1]>0&&largestNumberAchieved<i) {
@@ -448,6 +458,9 @@ function backgroundTick() {
 }
 function skippedTicks() {
 	return ((Math.floor(totalElapsedTime/mainInterval))-Math.floor((totalElapsedTime-elapsedTime)/mainInterval));
+}
+function skippedTicksDiscounters() {
+	return ((Math.floor(totalElapsedTime/discounterInterval))-Math.floor((totalElapsedTime-elapsedTime)/discounterInterval));
 }
 function generatorsTick() {
 	var lagMultiplier = skippedTicks();
@@ -598,6 +611,7 @@ function save() {
 		largestNumberAchieved: largestNumberAchieved,
 		researchCounting: researchCounting,
 		researchCurrentTime: researchCurrentTime,
+		sevensCounter: sevensCounter
 	};
 	localStorage.setItem("save", JSON.stringify(save));
 }
@@ -607,7 +621,9 @@ function load() {
 		return;
 	}
 	if (typeof save.largestNumberAchieved !== "undefined")
-			largestNumberAchieved = save.largestNumberAchieved;
+		largestNumberAchieved = save.largestNumberAchieved;
+	if (typeof save.sevensCounter !== "undefined")
+		sevensCounter = save.sevensCounter;
 	if (typeof save.number !== "undefined")
 	for (i=0; i<save.number.length; i++)
 		if (typeof save.number[i] !== "undefined")
@@ -672,7 +688,7 @@ function action(j) {
 				bigAutoUnlocked = true;
 				break;
 			case 13:
-				costs[4] = 1;
+				discounts[4] = 420419;
 				break;
 			case 14:
 				fourtyTwoUnlocked = true;
@@ -699,6 +715,13 @@ function action(j) {
 			case 22:
 				twosToo = true;
 				break;
+			case 23:
+			case 24:
+			case 25:
+			case 26:
+			case 27:
+				generatorMultiplier[4]*=5;
+				break;
 			default:
 				alert("i messed up the code");
 				break;
@@ -707,7 +730,22 @@ function action(j) {
 function actionR(num) {
 	switch (num) {
 		case 0:
-			alert("TEMPORARY END :DDDDDDDDDDDDD");
+			sevensGenerator+=5;
+			break;
+		case 1:
+			sevensGenerator+=100;
+			break;
+		case 2:
+			sevensGenerator+=100;
+			break;
+		case 3:
+			sevensGenerator+=25;
+			break;
+		case 4:
+			sevensGenerator+=25;
+			break;
+		case 5:
+			sevensGenerator+=25;
 			break;
 		default:
 			alert("i messed up the code");
@@ -716,9 +754,9 @@ function actionR(num) {
 }
 function checkFourtyTwo() {
 	if (fourtyTwoUnlocked&&generatorEffects[1]>30) {
-		costs[3] = 1000-15*(generatorEffects[1]-30);
-		if (generatorEffects[1]>=96)
-			costs[3] = 10;
+		discounts[3] = 15*(generatorEffects[1]-30);
+		if (discounts[3]>990)
+			discounts[3] = 990;
 	}
 }
 function checkThirteen() {
@@ -747,6 +785,14 @@ function checkTwosToo() {
 			generatorMultiplier[1] *= (twosTooTemporary+1);
 		}
 	}
+}
+function discountersTick() {
+	var lagMultiplier = skippedTicksDiscounters();
+	sevensCounter += sevensGenerator*lagMultiplier*discounterInterval/1000;
+	if (sevensCounter > 7777000)
+		discounts[6] = 7777000;
+	else
+		discounts[6] = Math.round(sevensCounter);
 }
 function smaller(num1, num2) {
 	if (num1<=num2)
