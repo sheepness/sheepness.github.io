@@ -353,7 +353,11 @@ function initNumbers() {
 function initClickers() {
 	var string = "";
 	for (i=1; i<number.length+1; i++) {
-		string += '<div class="inline center sheep"><img src="numbers/'+i+'.png" id="'+i+'Button" onmouseout="cancelAuto()" onmouseover="autoClick('+i+')" onClick="buttonPress('+i+')" align=middle class="text" /><br /><div class="center inline"><span id="'+i+'Cost" class="text">Cost: </span><span class="text" id="cost'+i+'"/></div></div>';
+		if (i>2)
+			string+='<div id="3Option" class="hidden inline center sheep">';
+		else
+			string+='<div class="inline center sheep">';
+		string += '<img src="numbers/'+i+'.png" id="'+i+'Button" onmouseout="cancelAuto()" onmouseover="autoClick('+i+')" onClick="buttonPress('+i+')" align=middle class="text" /><br /><div class="center inline"><span id="'+i+'Cost" class="text">Cost: </span><span class="text" id="cost'+i+'"/></div></div>';
 	}
 	document.getElementById("buttons").innerHTML = string;
 }
