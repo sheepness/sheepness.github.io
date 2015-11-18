@@ -100,11 +100,17 @@ function setUpgradeTooltip(num) {
 	document.getElementById("tooltip").className = "footer text";
 	renderTooltip();
 }
+function setMultiplierTooltip(num) {
+	tooltipMessage = "Increases multiplier of " + changeColor(num) + " generators";
+	flavorText = "";
+	document.getElementById("tooltip").className = "footer text";
+	renderTooltip();
+}
 function setTooltip(num) {
 	if (num<8)
 		tooltipMessage = "Generates 1 " + changeColor(num) + " per second, multiplied by (1+each amount of higher generators)";
 	else
-		tooltipMessage = "Generates [amount you have]x[amount of illegal numbers] " + changeColor(num) + "\'s per second";
+		tooltipMessage = "Generates 1 " + changeColor(num) + " per second";
 		flavorText = "";
 	document.getElementById("tooltip").className = "footer text";
 	renderTooltip();

@@ -2,6 +2,9 @@ body {
 	background-image: url("space.png");
 	background-repeat: repeat;
 }
+table {
+	display:inline-block;
+}
 .back {
 	position: fixed;
 	width:auto;

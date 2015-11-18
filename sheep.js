@@ -24,6 +24,9 @@ var researchCounting = new Array(researchCosts.length);
 var researchCurrentTime = new Array(researchCosts.length);
 var researchActivated = new Array(researchCosts.length);
 
+var multiplierCosts = [[[1000, 2], [1000, 3], [1000, 4], [1000, 5], [1000, 6], [1000, 7], [1000, 8], [1000, 9]], [[1000000, 2], [1000000, 3], [1000000, 4], [1000000, 5], [1000000, 6], [1000000, 7], [1000000, 8], [1000000, 9]]]
+var multiplierMultipliers = [[1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1]];
+
 var letterColours = ["#000000", "#FF0000", "#0000FF", "#00FF00", "#FFFF00", "#FF5500", "#8000FF", "#FF00FF", "#863200"];
 
 var upgradeTimer = false;
@@ -361,6 +364,17 @@ function initClickers() {
 	}
 	document.getElementById("buttons").innerHTML = string;
 }
+function initMultipliers() {
+	var string = "";
+	for (j=0; j<multiplierMultipliers.length; j++) {
+	string += '<tr class="center">';
+	for (i=1; i<number.length; i++) {
+		string += '<td><img src="numbers/'+i+'.png" onMouseOver="setMultiplierTooltip('+i+')" onMouseOut="cancelTooltip()" onclick="multiplierPress('+(j+1)+','+i+')"/><br /><div class="center inline"><span id="MultiplierCost'+(j+1)+'-'+i+'" class="text">Cost: </span><span class="text" id="MultiplierPrice'+(j+1)+'-'+i+'" /></div><br /><div id="MultiplierMultiplier'+(j+1)+'-'+i+'" class="center text">Multiplier: x1</div></div></td>';
+	}
+	string += '</tr>';
+	}
+	document.getElementById("multipliers").innerHTML = string;
+}
 function init() {
 	var d = new Date();
 	startTime = d.getTime();
@@ -370,6 +384,7 @@ function init() {
 	initUnlocked();
 	initResearch();
 	initBackground();
+	initMultipliers();
 	load();
 	startUpgrades();
 	renderCosts();
@@ -490,10 +505,10 @@ function generatorsTick() {
 				var multiplier = 1;
 				for (j=generatorEffects.length-1; j>i; j--)
 					multiplier*=(1+generatorEffects[j]);
-				number[i]+=(generatorEffects[i]*generatorMultiplier[i]*multiplier*generatorBoost*lagMultiplier*mainInterval/1000);
+				number[i]+=(generatorEffects[i]*multiplierMultipliers[0][i]*multiplierMultipliers[1][i]*generatorMultiplier[i]*multiplier*generatorBoost*lagMultiplier*mainInterval/1000);
 			}
 			else
-				number[i]+=(generatorEffects[i]*generatorMultiplier[i]*lagMultiplier*mainInterval/1000);
+				number[i]+=(generatorEffects[i]*multiplierMultipliers[0][i]*multiplierMultipliers[1][i]*generatorMultiplier[i]*lagMultiplier*mainInterval/1000);
 		}
 	}
 }
@@ -517,6 +532,7 @@ function renderButton() {
 }
 function render() {
 	renderGenerators();
+	renderMultipliers();
 	renderResources();
 	renderUpgrades();
 	renderResearch();
@@ -565,6 +581,14 @@ function renderGenerators() {
 		}
 	for (i = 0; i < generatorCosts.length; i++) {
 		document.getElementById("UpgradePrice"+(i+1)).innerHTML = Math.round(generatorCosts[i][0]*generatorDiscounts[i]) + " " + changeColor(generatorCosts[i][1]) + "'s";
+	}
+}
+function renderMultipliers() {
+	for (i=0; i<multiplierMultipliers.length; i++) {
+		for (j=0; j<multiplierMultipliers[i].length; j++) {
+			document.getElementById("MultiplierMultiplier"+(i+1)+"-"+(j+1)).innerHTML = "Multiplier: x"+multiplierMultipliers[i][j];
+			document.getElementById("MultiplierPrice"+(i+1)+"-"+(j+1)).innerHTML = Math.round(multiplierCosts[i][j][0]) + " " + changeColor(multiplierCosts[i][j][1]) + "'s";
+		}
 	}
 }
 function renderUpgrades() {
@@ -631,7 +655,9 @@ function save() {
 		largestNumberAchieved: largestNumberAchieved,
 		researchCounting: researchCounting,
 		researchCurrentTime: researchCurrentTime,
-		sevensCounter: sevensCounter
+		sevensCounter: sevensCounter,
+		multiplierMultipliers: multiplierMultipliers,
+		multiplierCosts: multiplierCosts
 	};
 	localStorage.setItem("save", JSON.stringify(save));
 }
@@ -644,6 +670,10 @@ function load() {
 		largestNumberAchieved = save.largestNumberAchieved;
 	if (typeof save.sevensCounter !== "undefined")
 		sevensCounter = save.sevensCounter;
+	if (typeof save.multiplierMultipliers !== "undefined")
+		multiplierMultipliers = save.multiplierMultipliers;
+	if (typeof save.multiplierCosts !== "undefined")
+		multiplierCosts = save.multiplierCosts;
 	if (typeof save.number !== "undefined")
 	for (i=0; i<save.number.length; i++)
 		if (typeof save.number[i] !== "undefined")
@@ -825,6 +855,14 @@ function upgradePress(num) {
 		generatorEffects[num-1]++;
 		number[generatorCosts[num-1][1]-1]-=Math.round(generatorCosts[num-1][0]*generatorDiscounts[num-1]);
 		generatorCosts[num-1][0]*=1.3;
+	}
+	render();
+}
+function multiplierPress(num1, num2) {
+	if (number[multiplierCosts[num1-1][num2-1][1]-1]>=Math.round(multiplierCosts[num1-1][num2-1][0])) {
+		multiplierMultipliers[num1-1][num2-1]++;
+		number[multiplierCosts[num1-1][num2-1][1]-1]-=Math.round(multiplierCosts[num1-1][num2-1][0]);
+		multiplierCosts[num1-1][num2-1][0]*=(1.3-0.05*num1);
 	}
 	render();
 }
