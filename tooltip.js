@@ -3,8 +3,8 @@ var flavorText = "";
 var letterColours = ["#000000", "#FF0000", "#0000FF", "#00FF00", "#FFFF00", "#FF5500", "#8000FF", "#FF00FF", "#863200"];
 var upgradeMessages = ['Increases multi-click by 1 for every two generators',
 						'Increases multi-click by 1 for every two generators',
-						'Increases multi-click by 1 for every two generators',
-						'Increases multi-click by 1 for every two generators',
+						'Increases multi-click by 5 for every two generators',
+						'Increases multi-click by 5 for every two generators',
 						'Increases generator '+changeColor(1)+' by 69 times',
 						'Increases generator '+changeColor(2)+' by 69 times',
 						'Increases generator '+changeColor(3)+' by 69 times',

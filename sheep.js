@@ -732,9 +732,11 @@ function action(j) {
 		switch(j) {
 			case 0:
 			case 1:
+				clickTimes++;
+				break;
 			case 2:
 			case 3:
-				clickTimes++;
+				clickTimes+=5;
 				break;
 			case 4:
 			case 5:
