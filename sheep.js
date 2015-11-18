@@ -137,10 +137,10 @@ function checkPrice() {
 		document.getElementById((num+2)+"Option").style.height = "auto";
 		document.getElementById((num+2)+"Option").style.overflow = "visible";
 	}
-	}, 1);
 	checkUnlockPrices();
 	checkResearchPrices();
 	checkButton();
+	}, 1);
 }
 function largestTierOwned() {
 	var tier = 0;
