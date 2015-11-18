@@ -138,6 +138,9 @@ function checkPrice() {
 		document.getElementById((num+2)+"Option").style.overflow = "visible";
 	}
 	}, 1);
+}
+function checkAll() {
+	checkPrice();
 	checkUnlockPrices();
 	checkResearchPrices();
 	checkButton();
@@ -358,11 +361,13 @@ function initNumbers() {
 function initClickers() {
 	var string = "";
 	for (i=1; i<number.length+1; i++) {
-		if (i>2)
+		if (i>2) {
 			string+='<div id="'+i+'Option" class="hidden inline center sheep">';
-		else
+			string += '<img src="numbers/'+i+'.png" id="'+i+'Button" onmouseout="cancelAuto()" onmouseover="autoClick('+i+')" onClick="buttonPress('+i+')" align=middle class="dank text" /><br /><div class="center inline"><span id="'+i+'Cost" class="dank text">Cost: </span><span class="dank text" id="cost'+i+'"/></div></div>';
+		} else {
 			string+='<div class="inline center sheep">';
-		string += '<img src="numbers/'+i+'.png" id="'+i+'Button" onmouseout="cancelAuto()" onmouseover="autoClick('+i+')" onClick="buttonPress('+i+')" align=middle class="text" /><br /><div class="center inline"><span id="'+i+'Cost" class="text">Cost: </span><span class="text" id="cost'+i+'"/></div></div>';
+			string += '<img src="numbers/'+i+'.png" id="'+i+'Button" onmouseout="cancelAuto()" onmouseover="autoClick('+i+')" onClick="buttonPress('+i+')" align=middle class="text" /><br /><div class="center inline"><span id="'+i+'Cost" class="text">Cost: </span><span class="text" id="cost'+i+'"/></div></div>';
+		}
 	}
 	document.getElementById("buttons").innerHTML = string;
 }
@@ -555,7 +560,7 @@ function render() {
 			document.getElementById("clickUpgradeToggle").innerHTML = "Toggle Autoclick (<span style=\"color:red\">off</span>)";
 	else
 		document.getElementById("clickUpgradeToggle").innerHTML = "Toggle Autoclick (<span style=\"color:blue\">locked</span>)";
-	checkPrice();
+	checkAll();
 }
 function changeColor(num) {
 	return "<span style=\"color:" + letterColours[num-1]+"\">" + num + "</span>";
