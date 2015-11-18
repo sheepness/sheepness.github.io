@@ -128,6 +128,7 @@ function checkPrice() {
 		biggest = largestNumberAchieved;
 	if (biggest>=number.length)
 		biggest = number.length-1;
+	setTimeout(function() {
 	for (num=(biggest-1); num>0; num--) {
 		document.getElementById((num+2)+"Button").className = "sick text";
 		document.getElementById((num+2)+"Cost").className = "sick text";
@@ -136,6 +137,7 @@ function checkPrice() {
 		document.getElementById((num+2)+"Option").style.height = "auto";
 		document.getElementById((num+2)+"Option").style.overflow = "visible";
 	}
+	}, 1);
 	checkUnlockPrices();
 	checkResearchPrices();
 	checkButton();
