@@ -1,4 +1,4 @@
-var number = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+var number = [10000000, 100000000, 1000000, 0, 0, 0, 0, 0, 0];
 var baseCosts = [0, 10, 100, 1000, 420420, 666, 7777777, 88888888, 999999999];
 var discounts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 var costs = [0, 10, 100, 1000, 420420, 666, 7777777, 88888888, 999999999];
@@ -39,6 +39,7 @@ var multiClick = true;
 var clickTime = 1000;
 var upgradeTime = 250;
 var clickNo = 1;
+var clickTimes = 0;
 var clickButton = 0;
 var upgradeButton = 0;
 
@@ -476,6 +477,12 @@ function timer() {
 			largestNumberAchieved = i;
 		}
 	}
+	var sum = 0;
+	for (i=0; i<generatorEffects.length; i++) {
+		sum+=generatorEffects[i];
+	}
+	sumHalf = Math.floor(sum/2);
+	clickNo = 1+sumHalf*clickTimes;
 	render();
 	d = new Date();
 	startTime = d.getTime();
@@ -727,7 +734,7 @@ function action(j) {
 			case 1:
 			case 2:
 			case 3:
-				clickNo*=5;
+				clickTimes++;
 				break;
 			case 4:
 			case 5:
