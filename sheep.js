@@ -397,26 +397,26 @@ function init() {
 	startUpgrades();
 	renderCosts();
 	for (i = 0; i < generatorCosts.length; i++) {
-		document.getElementById("UpgradePrice"+(i+1)).innerHTML = Math.round(generatorCosts[i][0]*generatorDiscounts[i]) + " " + changeColor(generatorCosts[i][1]) + "'s";
+		document.getElementById("UpgradePrice"+(i+1)).innerHTML = formatNumber(Math.round(generatorCosts[i][0]*generatorDiscounts[i])) + " " + changeColor(generatorCosts[i][1]) + "'s";
 	}
 	for (i = 0; i < upgradeCosts.length; i++) {
 		for (j = 0; j < upgradeCosts[i].length; j++) {
 			if (j==0)
-				document.getElementById("UnlockPrice"+(i+1)).innerHTML = upgradeCosts[i][j][0]+" "+changeColor(upgradeCosts[i][j][1])+"'s";
+				document.getElementById("UnlockPrice"+(i+1)).innerHTML = formatNumber(upgradeCosts[i][j][0])+" "+changeColor(upgradeCosts[i][j][1])+"'s";
 			else
-				document.getElementById("UnlockPrice"+(i+1)).innerHTML += "<br />" + upgradeCosts[i][j][0]+" "+changeColor(upgradeCosts[i][j][1])+"'s"
+				document.getElementById("UnlockPrice"+(i+1)).innerHTML += "<br />" + formatNumber(upgradeCosts[i][j][0])+" "+changeColor(upgradeCosts[i][j][1])+"'s"
 		}
 	}
 	for (i = 0; i < researchCosts.length; i++) {
 		for (j = 0; j < researchCosts[i].length; j++) {
 			if (j==0)
-				document.getElementById("ResearchPrice"+(i+1)).innerHTML = researchCosts[i][j][0]+" "+changeColor(researchCosts[i][j][1])+"'s";
+				document.getElementById("ResearchPrice"+(i+1)).innerHTML = formatNumber(researchCosts[i][j][0])+" "+changeColor(researchCosts[i][j][1])+"'s";
 			else
-				document.getElementById("ResearchPrice"+(i+1)).innerHTML += "<br />" + researchCosts[i][j][0]+" "+changeColor(researchCosts[i][j][1])+"'s"
+				document.getElementById("ResearchPrice"+(i+1)).innerHTML += "<br />" + formatNumber(researchCosts[i][j][0])+" "+changeColor(researchCosts[i][j][1])+"'s"
 		}
 	}
 	for (i=0; i<researchTimers.length; i++) {
-		document.getElementById("ResearchTimer"+(i+1)).innerHTML = Math.round(researchTimers[i]/1000) + "s";
+		document.getElementById("ResearchTimer"+(i+1)).innerHTML = formatNumber(Math.round(researchTimers[i]/1000)) + "s";
 	}
 	ok = setInterval(timer, mainInterval);
 	saveTimer = setInterval(save, 10000);
@@ -575,33 +575,62 @@ function changeColor(num) {
 function renderCosts() {
 	for (i = 0; i < costs.length; i++) {
 		if (i!=0)
-			document.getElementById("cost" + (i+1)).innerHTML = getCost(i+1) + " " + changeColor(i) + "'s";
+			document.getElementById("cost" + (i+1)).innerHTML = formatNumber(getCost(i+1)) + " " + changeColor(i) + "'s";
 		else
 			document.getElementById("cost" + (i+1)).innerHTML = 0;
 	}
 }
+function formatNumber(num) {
+	if (num==0) {
+		return "0";
+	}
+	tempNum = num;
+	digits = Math.floor(Math.log10(num))+1;
+	commas = Math.floor(Math.round((digits-1)*30000/3)/30000);
+	segments = new Array(commas+1);
+	string = "";
+	for (k=0; k<segments.length; k++) {
+		segments[k] = Math.floor(tempNum/Math.pow(10, 3*commas-3*k));
+		tempNum -= segments[k]*Math.pow(10, 3*commas-3*k);
+		if (k!=0)
+			string += threeify(segments[k]);
+		else
+			string += segments[k];
+		if (k!=segments.length-1)
+			string+=",";
+	}
+	return string;
+}
+function threeify(num) {
+	if (num>=100)
+		return num;
+	else if (num>=10)
+		return "0"+num;
+	else
+		return "00"+num;
+}
 function renderResources() {
 	for (i=0; i<number.length; i++) {
-		document.getElementById((i+1)+"Counter").innerHTML = Math.floor(number[i]) + " " + changeColor(i+1) + "'s";
+		document.getElementById((i+1)+"Counter").innerHTML = formatNumber(Math.floor(number[i])) + " " + changeColor(i+1) + "'s";
 	}
 }
 function renderGenerators() {
 	for (i=0; i<generatorEffects.length; i++) {
-		document.getElementById("UpAmount"+(i+1)).innerHTML = "You have: " + generatorEffects[i];
+		document.getElementById("UpAmount"+(i+1)).innerHTML = "You have: " + formatNumber(generatorEffects[i]);
 		var multiplier = 1;
 		for (j=generatorEffects.length-1; j>i; j--)
 			multiplier*=(1+generatorEffects[j]);
-		document.getElementById("UpgradeMultiplier"+(i+1)).innerHTML = "Multiplier: x"+generatorMultiplier[i]*multiplier;
+		document.getElementById("UpgradeMultiplier"+(i+1)).innerHTML = "Multiplier: x"+formatNumber(generatorMultiplier[i]*multiplier);
 		}
 	for (i = 0; i < generatorCosts.length; i++) {
-		document.getElementById("UpgradePrice"+(i+1)).innerHTML = Math.round(generatorCosts[i][0]*generatorDiscounts[i]) + " " + changeColor(generatorCosts[i][1]) + "'s";
+		document.getElementById("UpgradePrice"+(i+1)).innerHTML = formatNumber(Math.round(generatorCosts[i][0]*generatorDiscounts[i])) + " " + changeColor(generatorCosts[i][1]) + "'s";
 	}
 }
 function renderMultipliers() {
 	for (i=0; i<multiplierMultipliers.length; i++) {
 		for (j=0; j<multiplierMultipliers[i].length; j++) {
-			document.getElementById("MultiplierMultiplier"+(i+1)+"-"+(j+1)).innerHTML = "Multiplier: x"+multiplierMultipliers[i][j];
-			document.getElementById("MultiplierPrice"+(i+1)+"-"+(j+1)).innerHTML = Math.round(multiplierCosts[i][j][0]) + " " + changeColor(multiplierCosts[i][j][1]) + "'s";
+			document.getElementById("MultiplierMultiplier"+(i+1)+"-"+(j+1)).innerHTML = "Multiplier: x"+formatNumber(multiplierMultipliers[i][j]);
+			document.getElementById("MultiplierPrice"+(i+1)+"-"+(j+1)).innerHTML = formatNumber(Math.round(multiplierCosts[i][j][0])) + " " + changeColor(multiplierCosts[i][j][1]) + "'s";
 		}
 	}
 }
@@ -616,7 +645,7 @@ function renderResearch() {
 		var d = new Date();
 		if (researchEffects[i]) {
 			if ((d.getTime()-researchCurrentTime[i])<researchTimers[i])
-			document.getElementById("ResearchTimer"+(i+1)).innerHTML = Math.ceil((researchTimers[i]-(d.getTime()-researchCurrentTime[i]))/1000)+"s";
+			document.getElementById("ResearchTimer"+(i+1)).innerHTML = formatNumber(Math.ceil((researchTimers[i]-(d.getTime()-researchCurrentTime[i]))/1000))+"s";
 			else
 				document.getElementById("ResearchTimer"+(i+1)).innerHTML = "0s";
 		}
