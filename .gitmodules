@@ -1,0 +1,3 @@
+[submodule "sheep-bars"]
+	path = sheep-bars
+	url = https://github.com/sheepmolestor/sheep-bars
