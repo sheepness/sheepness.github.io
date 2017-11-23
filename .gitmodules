@@ -4,3 +4,6 @@
 [submodule "sheep-towers"]
 	path = sheep-towers
 	url = https://github.com/sheepmolestor/sheep-towers
+[submodule "sheep-subreddits"]
+	path = sheep-subreddits
+	url = https://github.com/sheepmolestor/sheep-subreddits
