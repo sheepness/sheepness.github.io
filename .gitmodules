@@ -10,3 +10,6 @@
 [submodule "sheep-battle"]
 	path = sheep-battle
 	url = https://github.com/sheepmolestor/sheep-battle
+[submodule "sheeple"]
+	path = sheeple
+	url = https://github.com/sheepness/sheeple.git
