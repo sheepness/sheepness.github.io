@@ -13,3 +13,6 @@
 [submodule "sheeple"]
 	path = sheeple
 	url = https://github.com/sheepness/sheeple.git
+[submodule "sheep-math"]
+	path = sheep-math
+	url = https://github.com/sheepness/sheep-math
